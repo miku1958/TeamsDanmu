@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-let DanmuViewHeight: CGFloat = 32
+let DanmuViewHeight: CGFloat = 48
 
 class DanmuView: NSStackView {
 	let avatarView = NSImageView()
@@ -23,6 +23,7 @@ class DanmuView: NSStackView {
 		
 		// Set avatar to circular shape
 		avatarView.wantsLayer = true
+		avatarView.imageScaling = .scaleProportionallyUpOrDown
 		avatarView.layer?.masksToBounds = true
 		avatarView.layer?.cornerRadius = DanmuViewHeight / 2
 
@@ -31,11 +32,12 @@ class DanmuView: NSStackView {
 		commentView.shadow = NSShadow()
 		commentView.shadow?.shadowColor = .black
 		commentView.shadow?.shadowBlurRadius = 2
+		commentView.font = .systemFont(ofSize: 28)
 
 		addArrangedSubview(avatarView)
 		addArrangedSubview(commentView)
 
-		guard var size = commentView.textStorage?.boundingRect(with: CGSize(width: 1000, height: DanmuViewHeight)).size else {
+		guard var size = commentView.textStorage?.boundingRect(with: CGSize(width: 2000, height: DanmuViewHeight)).size else {
 			return
 		}
 

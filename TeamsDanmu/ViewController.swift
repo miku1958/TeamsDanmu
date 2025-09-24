@@ -33,7 +33,7 @@ class ViewController: NSViewController {
 		danmuContainerView.orientation = .vertical
 		danmuContainerView.alignment = .leading
 
-		for _ in 0..<30 {
+		for _ in 0..<20 {
 			danmuContainerView.addArrangedSubview(NSView())
 		}
 		timestampFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -44,7 +44,7 @@ class ViewController: NSViewController {
 			let window = view.window,
 			let screen = NSScreen.screens.first(where: {
 				$0.localizedName == "VG271U M"
-			})
+			}) ?? NSScreen.screens.first
 		else {
 			return
 		}
@@ -66,10 +66,10 @@ class ViewController: NSViewController {
 			}
 			let sinceNow = self.timestampFormatter.date(from: message.timestamp)?.timeIntervalSinceNow ?? -.greatestFiniteMagnitude
 			print("Received danmu since Now: \(sinceNow)")
-			guard sinceNow > -60 else {
+			print("New danmu: \(message.name): \(message.content)")
+			guard !message.content.isEmpty else {
 				return
 			}
-			print("New danmu: \(message.name): \(message.content)")
             let danmuView = DanmuView(danmu: message)
 			danmuContainerView.views.first {
 				$0.subviews.isEmpty || $0.subviews.allSatisfy {
